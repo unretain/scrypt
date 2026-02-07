@@ -39,7 +39,10 @@
 #endif
 
 #include <math.h>
+#include <condition_variable>
 #include <list>
+#include <mutex>
+#include <thread>
 #include <vector>
 
 // Dump addresses to peers.dat and banlist.dat every 15 minutes (900s)

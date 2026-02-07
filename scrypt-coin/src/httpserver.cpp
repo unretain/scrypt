@@ -20,7 +20,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <condition_variable>
 #include <future>
+#include <mutex>
+#include <thread>
 
 #include <event2/thread.h>
 #include <event2/buffer.h>

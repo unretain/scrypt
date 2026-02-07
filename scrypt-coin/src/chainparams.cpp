@@ -94,10 +94,17 @@ public:
         consensus.nAdaptivePowEpochLength = ADAPTIVEPOW_EPOCH_LENGTH;
         consensus.nAdaptivePowGrowthRate = ADAPTIVEPOW_GROWTH_RATE;
 
+        // Proof of stake parameters
+        consensus.nStakeMinAge = 8 * 60 * 60;      // 8 hours minimum stake age
+        consensus.nStakeMaxAge = 30 * 24 * 60 * 60; // 30 days maximum stake age
+        consensus.nModifierInterval = 6 * 60 * 60;  // 6 hour stake modifier interval
+
         // BIP activation heights (from genesis)
         consensus.BIP34Height = 0;
         consensus.BIP65Height = 0;
         consensus.BIP66Height = 0;
+        consensus.BIP68Height = 0;
+        consensus.HeliopolisHardforkHeight = 0;
 
         // Deployment
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -185,9 +192,16 @@ public:
         consensus.nAdaptivePowEpochLength = 7 * 24 * 60 * 60;  // 7 days
         consensus.nAdaptivePowGrowthRate = 2;
 
+        // Proof of stake parameters (shorter for testnet)
+        consensus.nStakeMinAge = 1 * 60 * 60;       // 1 hour minimum stake age
+        consensus.nStakeMaxAge = 7 * 24 * 60 * 60;  // 7 days maximum stake age
+        consensus.nModifierInterval = 60 * 60;      // 1 hour stake modifier interval
+
         consensus.BIP34Height = 0;
         consensus.BIP65Height = 0;
         consensus.BIP66Height = 0;
+        consensus.BIP68Height = 0;
+        consensus.HeliopolisHardforkHeight = 0;
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 0;
@@ -259,9 +273,16 @@ public:
         consensus.nAdaptivePowEpochLength = 60 * 60;  // 1 hour
         consensus.nAdaptivePowGrowthRate = 1;
 
+        // Proof of stake parameters (minimal for regtest)
+        consensus.nStakeMinAge = 60;             // 1 minute minimum stake age
+        consensus.nStakeMaxAge = 60 * 60;        // 1 hour maximum stake age
+        consensus.nModifierInterval = 60;        // 1 minute stake modifier interval
+
         consensus.BIP34Height = 0;
         consensus.BIP65Height = 0;
         consensus.BIP66Height = 0;
+        consensus.BIP68Height = 0;
+        consensus.HeliopolisHardforkHeight = 0;
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 0;
