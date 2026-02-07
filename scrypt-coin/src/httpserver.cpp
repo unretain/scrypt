@@ -21,8 +21,10 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <condition_variable>
+#include <deque>
 #include <future>
 #include <mutex>
+#include <queue>
 #include <thread>
 
 #include <event2/thread.h>
