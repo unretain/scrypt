@@ -3824,7 +3824,7 @@ bool CWallet::CreateTransactionAll(
 
                 // Check that enough fee is included
                 // nPayFee is the min transaction fee is set by user. There are two methods to set nPayFee:
-                // 1) Set with option "paytxfee" in yacoin.conf
+                // 1) Set with option "paytxfee" in scrypt.conf
                 // 2) Set with rpc command "settxfee"
                 int64_t nPayFee = (nBytes * nTransactionFee) / 1000;
                 int64_t nMinFee = GetMinFee(nBytes);
