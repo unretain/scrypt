@@ -13,8 +13,46 @@
 #include "arith_uint256.h"
 
 #include <assert.h>
+#include <iostream>
 
 #include "chainparamsseeds.h"
+
+// Genesis block mining helper
+static void MineGenesisBlock(CBlock& genesis, const arith_uint256& bnTarget)
+{
+    printf("Mining genesis block...\n");
+    printf("Target: %s\n", bnTarget.GetHex().c_str());
+
+    uint32_t nNonce = 0;
+    while (true) {
+        genesis.nNonce = nNonce;
+        uint256 hash = genesis.GetHash();
+
+        if (UintToArith256(hash) <= bnTarget) {
+            printf("\n=== GENESIS BLOCK MINED ===\n");
+            printf("nNonce: %u\n", nNonce);
+            printf("Hash: %s\n", hash.GetHex().c_str());
+            printf("Merkle Root: %s\n", genesis.hashMerkleRoot.GetHex().c_str());
+            printf("\nUpdate chainparams.cpp with these values:\n");
+            printf("static uint256 hashGenesisBlock = uint256S(\"0x%s\");\n", hash.GetHex().c_str());
+            printf("static uint32_t nGenesisNonce = %u;\n", nNonce);
+            printf("static uint256 hashGenesisMerkleRoot = uint256S(\"0x%s\");\n", genesis.hashMerkleRoot.GetHex().c_str());
+            printf("===========================\n");
+            break;
+        }
+
+        if (nNonce % 100000 == 0) {
+            printf("Tried %u nonces, current hash: %s\r", nNonce, hash.GetHex().c_str());
+            fflush(stdout);
+        }
+
+        nNonce++;
+        if (nNonce == 0) {
+            printf("Nonce wrapped! Need to change timestamp.\n");
+            break;
+        }
+    }
+}
 
 //
 // SCRYPT COIN - A new cryptocurrency with AdaptivePow
@@ -128,6 +166,12 @@ public:
 
         // Genesis block
         genesis = CreateGenesisBlock(nGenesisTime, nGenesisNonce, 0x1e0fffff, 1);
+
+        // Mine genesis if nonce is placeholder (0)
+        if (nGenesisNonce == 0) {
+            MineGenesisBlock(genesis, consensus.powLimit);
+        }
+
         consensus.hashGenesisBlock = genesis.GetHash();
 
         // These assertions will fail until genesis is mined
