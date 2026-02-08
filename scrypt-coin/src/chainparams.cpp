@@ -164,15 +164,15 @@ public:
         nDefaultPort = 9333;
         nPruneAfterHeight = 100000;
 
-        // Genesis block
-        genesis = CreateGenesisBlock(nGenesisTime, nGenesisNonce, 0x1e0fffff, 1);
+        // Genesis block - use easy nBits (0x207fffff) so any hash is valid
+        // Difficulty adjusts normally after first blocks
+        genesis = CreateGenesisBlock(nGenesisTime, nGenesisNonce, 0x207fffff, 1);
 
         // Mine genesis if nonce is placeholder (0)
-        // Use maximum target - accepts first hash (instant)
         if (nGenesisNonce == 0) {
-            arith_uint256 easyTarget;
-            easyTarget.SetCompact(0x207fffff);  // Maximum - accepts ANY hash
-            MineGenesisBlock(genesis, easyTarget);
+            arith_uint256 genesisTarget;
+            genesisTarget.SetCompact(0x207fffff);
+            MineGenesisBlock(genesis, genesisTarget);
         }
 
         consensus.hashGenesisBlock = genesis.GetHash();
